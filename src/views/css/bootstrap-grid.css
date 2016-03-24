@@ -16,7 +16,7 @@ img {
 }
 .img-responsive {
   display: block;
-  width: 100% \9;
+  width: 100%;
   max-width: 100%;
   height: auto;
 }
@@ -784,4 +784,7 @@ hr {
   position: fixed;
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
+}
+.text-center {
+  text-align: center;
 }
