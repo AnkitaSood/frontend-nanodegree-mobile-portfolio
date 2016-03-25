@@ -12,12 +12,14 @@ The portfolio in this repo was optimized for speed and performance. The PageSpee
 
 1. Download the repository
 2. Go to dist folder and run a server using the command line. Make sure [python](https://www.python.org/downloads/) is installed.
-  ```bash
+  ``` bash
   $> cd /path/to/your-project-folder
   $> python -m SimpleHTTPServer 8080
   ```
   OR 
-  python -m http.server <port> - for Python 3.x
+  ``` bash
+  $> python -m http.server <port> - for Python 3.x
+    ```
 3. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
 
   ``` bash
