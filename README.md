@@ -45,13 +45,11 @@ The portfolio in this repo was optimized for speed and performance. The PageSpee
 
 #####Follow these steps to verify the performance scores:
 
-  1. Go to the dist/ folder and open pizza.html in a browser (preferably in incognito mode - with no other tasks/tabs running).
-  2. Open the web developer tools and record the timeline while interacting with the page.
-  3. Stop the recording and observe the timelines/ frame graphs.
-  OR
-  1. Open the pizza.html in Chrome Canary, and open the developer tools.
-  2. Go to the timeline section and select 'Show FPS meter' option under the Rendering tab.
-  3. Interact the page and observe the FPS meter.
+ 1. Go to the dist/ folder and open pizza.html in a browser (preferably in incognito mode - with no other tasks/tabs running).
+ 2. Open the web developer tools and record the timeline while interacting with the page.
+ 3. Stop the recording and observe the timelines/ frame graphs.
+
+Alternatively, open the pizza.html in Chrome Canary, and open the developer tools. Go to the timeline section and select 'Show FPS meter' option under the Rendering tab. Interact the page and observe the FPS meter.
 
 ##### HOW THE RESULT WAS ACHIEVED:
   - Cached all DOM element references, which were being manipulated for faster processing.
