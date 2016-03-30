@@ -16,7 +16,7 @@ Cameron Pittman, Udacity Course Developer
 cameron *at* udacity *dot* com
 */
 
-// As you may have realized, this website randomly generates pizzas.
+// This website randomly generates pizzas.
 // Here are arrays of all possible pizza ingredients.
 var pizzaIngredients = {};
 pizzaIngredients.meats = [
@@ -484,21 +484,14 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 
 // Moves the sliding background pizzas based on scroll position
 function updatePositions() {
+  var i, phaseVal = phase(),
+    items = document.getElementsByClassName('mover');
   frame++;
   window.performance.mark("mark_start_frame");
-  var phase = [],
-      scroll = document.body.scrollTop / 1250,
-      i,j,
-      items = document.getElementsByClassName('mover');
 
-    //Since only 5 distinct values are being used, cache them separately in a smaller loop
-    for (i = 0; i < 5; i++) {
-      phase.push(Math.sin(scroll + i ) * 100);
-    }
   //using css-transform for animation instead of changing left values.
-  for (i = 0, j=0; i < items.length; i++) {
-    items[i].style.transform = "translateX("+phase[j] +"px)";
-    (j < 4) ? j++ : j = 0 ;
+  for (i = 0; i < items.length; i++) {
+    items[i].style.transform = "translate3d("+phaseVal[i%5]*40 +"px, 0, 0)";
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -511,31 +504,36 @@ function updatePositions() {
   }
 }
 
+/* Created a separate function to calculate phase and return phase,
+  so that it can be used to assign left and transform values*/
+function phase() {
+  var scroll = document.body.scrollTop / 1000,
+      phaseVals = [];
+  //Since only 5 distinct values are being used, cache them separately in a smaller loop
+  for (i = 0; i < 5; i++) {
+    phaseVals.push(Math.sin(scroll + i ));
+  }
+  return phaseVals;
+};
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
-  var cols = 6,s = 256, i, j, leftPos = [],
-      movingPizzas1 = document.getElementById("movingPizzas1");
-  //Since the left position is going to be repeated for every column, caching it in a smaller loop
-  for (i = 0; i < cols; i++) {
-    leftPos.push(i * s);
-  };
+  var cols = 8,s = 256, i, rows, phaseVal = phase(), basicLeft,
+      movingPizzas1 = document.getElementById("movingPizzas1"), elem;
 
-  //Using a reasonable number to display animated pizzas at the background for approx all screen sizes, since their position is fixed.
-  for (i = 0, j=0; i < 40; i++) {
-    var elem = document.createElement('img');
+    /* Based on the height of the screen, total no of pizzas to be displayed is rows * cols,
+      where rows = screen-height/space between each image */
+  rows = Math.floor(window.screen.availHeight / 150);
+
+  for (i = 0; i < rows*8; i++) {
+    elem = document.createElement('img');
     elem.src = "../img/views/pizza.png";
     elem.className = 'mover';
-    elem.style.left = leftPos[j] + 'px';
-    (j < 5) ? j++ : j = 0 ;
+    basicLeft = (i % cols) * s;
+    elem.style.left = basicLeft + 40*phaseVal[i%5] + 'px';
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     movingPizzas1.appendChild(elem);
   }
 });
-
-//Updating position only when scroll is detected
-movingPizzas1.onscroll = function() {
-  updatePositions();
-}
