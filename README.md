@@ -25,7 +25,7 @@ The portfolio in this repo was optimized for speed and performance. The PageSpee
 3. Download and install [ngrok](https://ngrok.com/) to make your local server accessible remotely.
 
   ``` bash
-  $> cd /path/to/your-project-folder
+  $> cd /path/to/dist-project-folder
   $> ngrok http 8080
   ```
 4. Copy the public URL ngrok gives you and run it through PageSpeed Insights! 
@@ -38,6 +38,8 @@ The portfolio in this repo was optimized for speed and performance. The PageSpee
 - Marked JS files not being used to deliver primary content as async.
 - Compressed images.
 - Minified and compressed CSS, JS and HTML files - using Gulp tasks.
+- Used gulp's [critical](https://www.npmjs.com/package/critical) to inline the most immediately-used CSS [critical render blocking CSS]
+- Resized the pizzeria image.
 
 ####Part 2: Optimize Frames per Second in pizza.html
 
@@ -49,17 +51,17 @@ The portfolio in this repo was optimized for speed and performance. The PageSpee
   OR
   1. Open the pizza.html in Chrome Canary, and open the developer tools.
   2. Go to the timeline section and select 'Show FPS meter' option under the Rendering tab.
-  3. Interact the page and obserce the FPS meter.
+  3. Interact the page and observe the FPS meter.
 
 ##### HOW THE RESULT WAS ACHIEVED:
   - Cached all DOM element references, which were being manipulated for faster processing.
   - Replaced querySelectorAll() and document.querySelector() with getELementById() and getElementsByClassName().
   - Moved code out of for loops which didn't have to be run for all the loops.
-  - Replaced animation effect of shifting left postiong by css transition effect.
-  - Reduced the number of background pizzas be displayed on page load at once to a number suitable for most screen sizes.
-  - Minimized the JS, CSS, HTML and images using gulp tasks
+  - Replaced animation effect of shifting left positioning by css transition effect. Used CSS hardware-acceleration by using transform     property on the moving pizzas.
+  - Reduced the number of background pizzas be displayed on page load at once according to the available screenheight.
+  - Minimized the JS, CSS, HTML and images using gulp tasks.
   - Removed duplicacy of switch cases while resizing pizzas and refactored the code for the same.
 
-All these changes resuled in loading the pizzas on initial load faster, and the average time per 10 frames also dropped significantly ( close to < 1ms each time).
+All these changes resuled in loading the pizzas on initial load faster. The average time per 10 frames ( close to < 1ms each time) and the time to resize pizzas ( < 5ms) also dropped significantly .
 
 
