@@ -4,7 +4,8 @@ var gulp = require('gulp'),
     useref = require('gulp-useref'),
     imagemin = require('gulp-imagemin'),
     htmlmin = require('gulp-htmlmin'),
-    cleanCSS = require('gulp-clean-css');
+    cleanCSS = require('gulp-clean-css'),
+    critical = require('critical');
 
 var ngrok = require('ngrok'),
     psi = require('psi'),
@@ -63,6 +64,19 @@ gulp.task('htmlmin', function() {
     .pipe(reload({stream: true}));
 });
 
+gulp.task('critical', function (cb) {
+    critical.generate({
+        inline: true,
+        base: 'src/',
+        src: 'index.html',
+        css: ['dist/css/style.css'],
+        dest: 'dist/index.html',
+        minify: true,
+        width: 768,
+        height: 1024
+    });
+});
+
 gulp.task('browser-sync', function() {
     browserSync.init({
         server: {
@@ -92,7 +106,7 @@ gulp.task('browser-sync', function() {
     gulp.watch(['src/css/*.css'], ['cssmin']);
     gulp.watch(['src/js/*.js' , 'src/views/js/*.js'], ['jsmin']);
     gulp.watch(['src/views/css/*.css', 'src/views/*.html'],['useref', reload]);
-    gulp.watch(['src/*.html', 'dist/views/*.html'], ['htmlmin',reload]);
+    gulp.watch(['src/*.html', 'dist/views/*.html'], ['htmlmin', 'critical', reload]);
 });
 
-gulp.task('default', ['cssmin','jsmin','img-compress','useref','htmlmin']);
+gulp.task('default', ['jsmin','img-compress','useref','cssmin','htmlmin','critical']);

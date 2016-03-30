@@ -32,6 +32,8 @@ form {
   height: 100px;
   width: 73.333px;
   will-change: transform; /* Warning the browser ahead of time about the changes it should expect on this element*/
+  -webkit-transform: translate3d(0, 0, 0);
+   transform: translate3d(0, 0, 0); /*declaration with default values triggers GPU acceleration*/
 }
 
 .randomPizzaContainer {
